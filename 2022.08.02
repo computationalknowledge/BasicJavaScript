@@ -1,8 +1,25 @@
-console.log("starting program");
+<html>
+<head>
+    <title>Peter's Page</title>
+</head>
 
-for ( ; ; ){
+<body> 
+<script>
+function sum(a, b){ 
+const start = a;
+const end = b;
+var current;
+var sum=0;
+for ( var i=a;i<=b ;i++ ){
+        sum+=i;
+    }
+    document.write("point a", sum , "<HR>");
+    return sum;
+}        
 
-    console.log("Yeah I am in the FOR LOOP");
-}
+document.write("<P>", sum(1,10))
+</script>      
+        
+</body>
 
-console.log("ending program");
+</html>
