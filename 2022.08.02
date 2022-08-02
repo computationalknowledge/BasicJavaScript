@@ -1,0 +1,8 @@
+console.log("starting program");
+
+for ( ; ; ){
+
+    console.log("Yeah I am in the FOR LOOP");
+}
+
+console.log("ending program");
