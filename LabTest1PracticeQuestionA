@@ -1,0 +1,14 @@
+Explain what is going on with this CODE:
+What will the values of Zebra be:
+
+var zebra = 0;
+function a(c){
+    console.log(zebra); 
+    b();
+}
+
+function b(){
+    zebra++;
+    a(b())
+}
+a()
