@@ -1,0 +1,65 @@
+
+Classes Are Functions Prior to the class keyword introduced in ES6, to create a class you would create a function that served as the class constructor. 
+
+While the class syntax is much more intuitive and straightforward, under the hood the nature of classes in JavaScript hasn’t changed 
+(class just adds some syntactic sugar), so it’s important to understand how a class is represented in JavaScript. A class is really just a function. 
+In ES5, we would have started our Car class like this: 
+
+function Car(make, model) {
+   this.make = make;
+   this.model = model;
+   this._userGears = ['P', 'N', 'R', 'D'];
+   this._userGear = this.userGears[0];
+}
+
+We can still do this in ES6: the outcome is exactly the same (we’ll get to methods in a bit). We can verify that by trying it both ways: class Es6Car {}         // we'll omit the constructor for brevity
+
+
+function Es5Car {}
+> typeof Es6Car         // "function"
+> typeof Es5Car         // "function" So nothing’s really new in ES6; we just have some handy new syntax. The Prototype When you refer to methods that are available on instances of a class, you are referring to prototype methods. For example, when talking about the shift method that’s available on Car instances, you’re referring to a prototype method, and you will
+
+const Car = (function() {
+
+   const carProps = new WeakMap();
+
+   class Car {
+      constructor(make, model) {
+         this.make = make;
+         this.model = model;
+
+this._userGears = ['P', 'N', 'R', 'D'];
+         carProps.set(this, { userGear: this._userGears[0] });
+      }
+
+      get userGear() { return carProps.get(this).userGear; }
+      set userGear(value) {
+         if(this._userGears.indexOf(value) < 0)
+            throw new Error(`Invalid gear: ${value}`);
+         carProps.get(this).userGear = value;
+      }
+
+      shift(gear) { this.userGear = gear; }
+   }
+
+   return Car;
+})();
+
+const car1 = new Car();
+const car2 = new Car();
+car1.shift === Car.prototype.shift;     // true
+car1.shift('D');
+car1.shift('d');                        // error
+car1.userGear;                          // 'D'
+car1.shift === car2.shift               //
+
+car1.shift = function(gear) { this.userGear = gear.toUpperCase(); }
+car1.shift === Car.prototype.shift;     // false
+car1.shift === car2.shift;              // false
+car1.shift('d');
+car1.userGear;                          // 'D'
+
+Brown, Ethan. Learning JavaScript . O'Reilly Media. Kindle Edition. 
+Brown, Ethan. Learning JavaScript . O'Reilly Media. Kindle Edition. 
+
+Brown, Ethan. Learning JavaScript . O'Reilly Media. Kindle Edition. 
